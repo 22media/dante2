@@ -37,7 +37,7 @@ package
 # Build stuff
 amd/
 lib/
-es/
+#es/
 tmp-bower-repo/
 tmp-docs-repo/
 .babel-cache/
