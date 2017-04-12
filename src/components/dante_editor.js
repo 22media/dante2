@@ -232,6 +232,10 @@ export default class DanteEditor extends React.Component {
       this.handleTooltipDisplayOn('displayOnSelection', false)
     }
 
+    if (this.props.onChange !== undefined) {
+        this.props.onChange(editorState);
+    }
+
     setTimeout(() => {
       return this.relocateTooltips()
     }, 0)

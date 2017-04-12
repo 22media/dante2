@@ -226,6 +226,10 @@ var DanteEditor = function (_React$Component) {
       this.handleTooltipDisplayOn('displayOnSelection', false);
     }
 
+    if (this.props.onChange !== undefined) {
+      this.props.onChange(editorState);
+    }
+
     setTimeout(function () {
       return _this2.relocateTooltips();
     }, 0);
