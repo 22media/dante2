@@ -26633,7 +26633,7 @@
 	        wrapper: null,
 	        element: 'div'
 	      }
-	    }).merge(_this.props.customBlockRenderMap);
+	    }).merge(_this.props.config.customBlockRenderMap);
 
 	    _this.extendedBlockRenderMap = _draftJs.DefaultDraftBlockRenderMap.merge(_this.blockRenderMap);
 

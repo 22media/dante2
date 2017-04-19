@@ -127,7 +127,7 @@ var DanteEditor = function (_React$Component) {
         wrapper: null,
         element: 'div'
       }
-    }).merge(_this.props.customBlockRenderMap);
+    }).merge(_this.props.config.customBlockRenderMap);
 
     _this.extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(_this.blockRenderMap);
 
