@@ -129,7 +129,8 @@ var DanteEditor = function (_React$Component) {
       }
     }).merge(_this.props.config.customBlockRenderMap);
 
-    _this.extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(_this.blockRenderMap);
+    // edited by colin & junkit
+    _this.extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(_this.blockRenderMap).merge(_this.props.config.customBlockRenderMap);
 
     _this.state = {
       editorState: _this.initializeState(),
