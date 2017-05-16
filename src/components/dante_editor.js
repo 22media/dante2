@@ -139,7 +139,8 @@ export default class DanteEditor extends React.Component {
       }
     }).merge(this.props.config.customBlockRenderMap)
 
-    this.extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(this.blockRenderMap)
+    // added by colin & junkit
+    this.extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(this.blockRenderMap).merge(this.props.config.customBlockRenderMap)
 
     this.state = {
       editorState: this.initializeState(),
