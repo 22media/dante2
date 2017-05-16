@@ -70,10 +70,6 @@
     "webpack-dev-server": "^1.16.2",
     "yargs": "3.32.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/michelson/Dante2.git"
-  },
   "keywords": [
     "dante",
     "dante2",
