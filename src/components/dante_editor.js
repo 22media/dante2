@@ -3,42 +3,42 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Immutable from 'immutable'
 import { Map, fromJS } from 'immutable'
-import { 
-  convertToRaw, 
-  convertFromRaw, 
-  CompositeDecorator, 
-  //getVisibleSelectionRect, 
-  getDefaultKeyBinding, 
-  //getSelectionOffsetKeyForNode, 
-  //KeyBindingUtil, 
-  ContentState, 
-  Editor, 
-  EditorState, 
-  Entity, 
-  RichUtils, 
-  DefaultDraftBlockRenderMap, 
-  SelectionState, 
-  Modifier, 
-  //BlockMapBuilder, 
-  //getSafeBodyFromHTML 
+import {
+  convertToRaw,
+  convertFromRaw,
+  CompositeDecorator,
+  //getVisibleSelectionRect,
+  getDefaultKeyBinding,
+  //getSelectionOffsetKeyForNode,
+  //KeyBindingUtil,
+  ContentState,
+  Editor,
+  EditorState,
+  Entity,
+  RichUtils,
+  DefaultDraftBlockRenderMap,
+  SelectionState,
+  Modifier,
+  //BlockMapBuilder,
+  //getSafeBodyFromHTML
 } from 'draft-js'
 
 //import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor'
 
-import { 
+import {
   convertToHTML,
-  //, convertFromHTML 
+  //, convertFromHTML
 } from 'draft-convert'
 
-//import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent'
+import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent'
 
-import { 
-  addNewBlock, 
-  resetBlockWithType, 
-  updateDataOfBlock, 
-  //updateTextOfBlock, 
-  getCurrentBlock, 
-  addNewBlockAt 
+import {
+  addNewBlock,
+  resetBlockWithType,
+  updateDataOfBlock,
+  //updateTextOfBlock,
+  getCurrentBlock,
+  addNewBlockAt
 } from '../model/index.js'
 
 //import DanteImagePopover from './popovers/image'
@@ -547,6 +547,11 @@ export default class DanteEditor extends React.Component {
 
     let { editorState } = this.state
 
+    if (isSoftNewlineEvent(e)) {
+        this.onChange(RichUtils.insertSoftNewline(editorState))
+        return true
+    }
+
     if (!e.altKey && !e.metaKey && !e.ctrlKey) {
       const currentBlock = getCurrentBlock(editorState)
       const blockType = currentBlock.getType()
@@ -579,10 +584,10 @@ export default class DanteEditor extends React.Component {
           // hack hackety hack
           // https://github.com/facebook/draft-js/issues/304
           const newContent = Modifier.splitBlock(
-            this.state.editorState.getCurrentContent(), 
+            this.state.editorState.getCurrentContent(),
             this.state.editorState.getSelection())
 
-          const newEditorState = EditorState.push(this.state.editorState, 
+          const newEditorState = EditorState.push(this.state.editorState,
                                                   newContent, 'insert-characters')
           this.onChange(newEditorState)
 

@@ -7,25 +7,25 @@ import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import { Map, fromJS } from 'immutable';
 import { convertToRaw, convertFromRaw, CompositeDecorator,
-//getVisibleSelectionRect, 
+//getVisibleSelectionRect,
 getDefaultKeyBinding,
-//getSelectionOffsetKeyForNode, 
-//KeyBindingUtil, 
+//getSelectionOffsetKeyForNode,
+//KeyBindingUtil,
 ContentState, Editor, EditorState, Entity, RichUtils, DefaultDraftBlockRenderMap, SelectionState, Modifier } from
-//BlockMapBuilder, 
-//getSafeBodyFromHTML 
+//BlockMapBuilder,
+//getSafeBodyFromHTML
 'draft-js';
 
 //import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor'
 
 import { convertToHTML } from
-//, convertFromHTML 
+//, convertFromHTML
 'draft-convert';
 
-//import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent'
+import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent'
 
 import { addNewBlock, resetBlockWithType, updateDataOfBlock,
-//updateTextOfBlock, 
+//updateTextOfBlock,
 getCurrentBlock, addNewBlockAt } from '../model/index.js';
 
 //import DanteImagePopover from './popovers/image'
@@ -565,6 +565,11 @@ var DanteEditor = function (_React$Component) {
     }
 
     var editorState = this.state.editorState;
+
+    if (isSoftNewlineEvent(e)) {
+        this.onChange(RichUtils.insertSoftNewline(editorState));
+        return true;
+    }
 
 
     if (!e.altKey && !e.metaKey && !e.ctrlKey) {
