@@ -59,20 +59,22 @@ var VideoBlock = function (_React$Component) {
     if (!this.props.blockProps.data) {
       return;
     }
-    // ensure data isnt already loaded
-    if (!this.dataForUpdate().endpoint && !this.dataForUpdate().provisory_text) {
-      return;
-    }
 
-    return axios({
-      method: 'get',
-      url: '' + this.dataForUpdate().endpoint + this.dataForUpdate().provisory_text + '&scheme=https'
-    }).then(function (result) {
-      return _this2.setState({ embed_data: result.data } //JSON.parse(data.responseText)
-      , _this2.updateData);
-    })['catch'](function (error) {
-      return console.log("TODO: error");
-    });
+    _this2.setState({ embed_data: this.dataForUpdate().provisory_text });
+    // // ensure data isnt already loaded
+    // if (!this.dataForUpdate().endpoint && !this.dataForUpdate().provisory_text) {
+    //   return;
+    // }
+    //
+    // return axios({
+    //   method: 'get',
+    //   url: '' + this.dataForUpdate().endpoint + this.dataForUpdate().provisory_text + '&scheme=https'
+    // }).then(function (result) {
+    //   return _this2.setState({ embed_data: result.data } //JSON.parse(data.responseText)
+    //   , _this2.updateData);
+    // })['catch'](function (error) {
+    //   return console.log("TODO: error");
+    // });
   };
 
   VideoBlock.prototype.classForImage = function classForImage() {
@@ -84,17 +86,13 @@ var VideoBlock = function (_React$Component) {
   };
 
   VideoBlock.prototype.render = function render() {
-    return React.createElement(
-      'figure',
-      { className: 'graf--figure graf--iframe graf--first', tabIndex: '0' },
-      React.createElement('div', { className: 'iframeContainer',
-        dangerouslySetInnerHTML: { __html: this.state.embed_data.html } }),
-      React.createElement(
-        'figcaption',
-        { className: 'imageCaption' },
-        React.createElement(EditorBlock, _Object$assign({}, this.props, { "className": "imageCaption" }))
-      )
-    );
+    return React.createElement('input', { disabled: 'true', 'value': 'Video placeholder for ' + this.state.embed_data, className:'videoInput' });
+    //   React.createElement(
+    //     'figcaption',
+    //     { className: 'imageCaption' },
+    //     React.createElement(EditorBlock, _Object$assign({}, this.props, { "className": "imageCaption" }))
+    //   )
+    // );
   };
 
   return VideoBlock;
