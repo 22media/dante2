@@ -29,10 +29,14 @@ class DanteImagePopover extends React.Component {
       },
       show: false,
       scaled: false,
-      buttons: [{ type: "left" }, 
-                { type: "center"}, 
-                { type: "fill" }, 
-                { type: "wide" }]
+      buttons: [{ type: "left" },
+                { type: "center"},
+                { type: "fill" },
+                { type: "wide" },
+                { type: "carousel-start" },
+                { type: "carousel-middle" },
+                { type: "carousel-end" }
+                ]
     }
   }
 
