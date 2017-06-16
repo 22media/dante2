@@ -30,6 +30,7 @@ class DanteImagePopover extends React.Component {
       show: false,
       scaled: false,
       buttons: [{ type: "left" },
+                { type: "center-left" },
                 { type: "center"},
                 { type: "fill" },
                 { type: "wide" },
@@ -143,7 +144,7 @@ class DanteImagePopover extends React.Component {
       <div
         ref="image_popover"
         className={ `dante-popover popover--Aligntooltip popover--top popover--animated ${ this.state.show ? 'is-active' : undefined }` }
-        style={ 
+        style={
           { top: this.state.position.top,
             left: this.state.position.left }
           }
@@ -180,8 +181,8 @@ class DanteImagePopoverItem extends React.Component {
   }
 
   render() {
-    return <li 
-      className={`dante-menu-button align-${ this.props.item.type }`} 
+    return <li
+      className={`dante-menu-button align-${ this.props.item.type }`}
       onMouseDown={this.handleClick}>
         <span className={`tooltip-icon dante-icon-image-${ this.props.item.type }`} />
     </li>
@@ -189,4 +190,3 @@ class DanteImagePopoverItem extends React.Component {
 }
 
 export default DanteImagePopover
-

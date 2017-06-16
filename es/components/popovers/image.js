@@ -35,7 +35,7 @@ var DanteImagePopover = function (_React$Component) {
       },
       show: false,
       scaled: false,
-      buttons: [{ type: "left" }, { type: "center" }, { type: "fill" }, { type: "wide" },{ type: "carousel-start" },{ type: "carousel-middle" },{ type: "carousel-end" }]
+      buttons: [{ type: "left" }, { type: "center-left" }, { type: "center" }, { type: "fill" }, { type: "wide" },{ type: "carousel-start" },{ type: "carousel-middle" },{ type: "carousel-end" }]
     };
     return _this;
   }
