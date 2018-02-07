@@ -261,7 +261,6 @@ var DanteInlineTooltip = function (_React$Component) {
       React.createElement(
         'button',
         {
-          type: 'button',
           className: 'inlineTooltip-button control',
           title: 'Close Menu',
           'data-action': 'inline-menu',
@@ -321,7 +320,6 @@ var InlineTooltipItem = function (_React$Component2) {
     return React.createElement(
       'button',
       {
-        type: 'button',
         className: 'inlineTooltip-button scale',
         title: this.props.title,
         onMouseDown: this.clickHandler
