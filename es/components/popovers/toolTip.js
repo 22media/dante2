@@ -136,11 +136,11 @@ var DanteTooltip = function (_React$Component) {
 
     // console.log "SET SHOW FOR TOOLTIP INSERT MENU"
     return this.setState({
-      show: true,
-      position: {
-        left: left,
-        top: top
-      }
+      show: true
+    //   position: {
+    //     left: left,
+    //     top: top
+    //   }
     });
   };
 
