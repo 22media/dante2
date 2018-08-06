@@ -86,21 +86,10 @@ export const resetBlockWithType = (editorState, newType = "unstyled", data={}) =
   const blockMap = contentState.getBlockMap();
   const block = blockMap.get(key);
 
-  let newText = '';
-  console.log( "DATA FOR PLACEHOLDER!", data)
   const text = block.getText();
-  if (block.getLength() >= 2) {
-    newText = text.substr(1);
-  }
-
-  /*if(data.text){
-    newText = data.text
-  }*/
-
-  //let newText = data.text
 
   const newBlock = block.merge({
-    text: newText,
+    text: text,
     type: newType,
     data: getDefaultBlockData(newType, data),
   });
@@ -139,7 +128,7 @@ export const updateTextOfBlock = (editorState, block, text) => {
     blockMap: contentState.getBlockMap().set(block.getKey(), newBlock),
   });
 
-  return EditorState.push(editorState, newContentState, 'change-block-type');
+  return EditorState.push(editorState, newContentState, 'replace-text');
   // return editorState;
 };
 

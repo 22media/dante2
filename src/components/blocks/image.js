@@ -30,6 +30,7 @@ export default class ImageBlock extends React.Component {
     this.handleGrafFigureSelectImg = this.handleGrafFigureSelectImg.bind(this)
     this.getUploadUrl = this.getUploadUrl.bind(this)
     this.uploadFile = this.uploadFile.bind(this)
+    this.uploadFailed = this.uploadFailed.bind(this)
     this.uploadCompleted = this.uploadCompleted.bind(this)
     this.updateProgressBar = this.updateProgressBar.bind(this)
     this.placeHolderEnabled = this.placeHolderEnabled.bind(this)
@@ -44,7 +45,6 @@ export default class ImageBlock extends React.Component {
       loading: false,
       selected: false,
       loading_progress: 0,
-      enabled: false,
       caption: this.defaultPlaceholder(),
       direction: existing_data.direction || "center",
       width: 0,
@@ -254,7 +254,18 @@ export default class ImageBlock extends React.Component {
   }
 
   uploadFile() {
+
     let handleUp
+    // custom upload handler
+    if (this.config.upload_handler) {
+      return this.config.upload_handler(this.formatData().get('file'), this)
+    }
+    
+    if (!this.config.upload_url){
+      this.stopLoader()
+      return
+    }
+    
     axios({
       method: 'post',
       url: this.getUploadUrl(),
@@ -264,17 +275,13 @@ export default class ImageBlock extends React.Component {
         return this.updateProgressBar(e)
       }
     }).then(result => {
-      this.uploadCompleted(result.data)
-      this.props.blockProps.removeLock()
-      this.stopLoader()
-      this.file = null
+      this.uploadCompleted(result.data.url)
 
       if (this.config.upload_callback) {
         return this.config.upload_callback(result, this)
       }
     }).catch(error => {
-      this.props.blockProps.removeLock()
-      this.stopLoader()
+      this.uploadFailed()
 
       console.log(`ERROR: got error uploading file ${ error }`)
       if (this.config.upload_error_callback) {
@@ -283,12 +290,20 @@ export default class ImageBlock extends React.Component {
     })
 
     return handleUp = json_response => {
-      return this.uploadCompleted(json_response, n)
+      return this.uploadCompleted(json_response.url, n)
     }
   }
 
-  uploadCompleted(json) {
-    return this.setState({ url: json.url }, this.updateData)
+  uploadFailed() {
+    this.props.blockProps.removeLock()
+    this.stopLoader()
+  }
+
+  uploadCompleted(url) {
+    this.setState({ url }, this.updateData)
+    this.props.blockProps.removeLock()
+    this.stopLoader()
+    this.file = null
   }
 
   updateProgressBar(e) {
@@ -307,18 +322,11 @@ export default class ImageBlock extends React.Component {
   }
 
   placeholderText() {
-    if (this.placeHolderEnabled()) {
-      return ""
-    }
-    return "Write caption for image (optional)"
+    return this.config.image_caption_placeholder
   }
 
   handleFocus(e) {
-    // console.log "focus on placeholder"
-    return setTimeout(() => {
-      return this.setState({
-        enabled: true })
-    }, 0)
+
   }
 
   render() {
@@ -334,12 +342,14 @@ export default class ImageBlock extends React.Component {
             ref="image_tag" 
             height={this.state.aspect_ratio.height} 
             width={this.state.aspect_ratio.width} 
-            className='graf-image' />
+            className='graf-image'
+            contentEditable={false}
+          />
           <Loader toggle={this.state.loading} 
             progress={this.state.loading_progress} />
         </div>
         <figcaption className='imageCaption' onMouseDown={this.handleFocus}>
-          { !this.state.enabled ? 
+          { this.props.block.getText().length === 0 ? 
             <span className="danteDefaultPlaceholder">
               {this.placeholderText()}
             </span> : undefined}
@@ -374,4 +384,5 @@ class Loader extends React.Component {
     )
   }
 }
+
 

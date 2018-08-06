@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 
 import { Entity, RichUtils, AtomicBlockUtils, EditorState } from 'draft-js'
 
-import { getSelectionRect, getSelection } from "../../utils/selection.js"
+import { getSelectionRect, getSelection, getRelativeParent } from "../../utils/selection.js"
 
 import { getCurrentBlock, getNode } from '../../model/index.js'
 
@@ -30,14 +30,9 @@ class DanteImagePopover extends React.Component {
       show: false,
       scaled: false,
       buttons: [{ type: "left" },
-                { type: "center-left" },
                 { type: "center"},
                 { type: "fill" },
-                { type: "wide" },
-                { type: "carousel-start" },
-                { type: "carousel-middle" },
-                { type: "carousel-end" }
-                ]
+                { type: "wide" }]
     }
   }
 
@@ -102,23 +97,30 @@ class DanteImagePopover extends React.Component {
 
       let node = getNode()
 
-      let selectionBoundary = getSelectionRect(nativeSelection)
-      let coords = selectionBoundary
-
-      let parent = ReactDOM.findDOMNode(this.props.editor)
-      let parentBoundary = parent.getBoundingClientRect()
-
       this.display(blockType === "image")
 
       if (blockType === "image") {
-        selectionBoundary = node.anchorNode.parentNode.parentNode
+        let selectionBoundary = node.anchorNode.parentNode.parentNode
                                            .parentNode.getBoundingClientRect()
+        
+        let coords = selectionBoundary
+
         let el = this.refs.image_popover
         let padd = el.offsetWidth / 2
-        return this.setPosition({
-          top: selectionBoundary.top - parentBoundary.top + 60,
-          left: selectionBoundary.left + selectionBoundary.width / 2 - padd
-        })
+
+        let parent = ReactDOM.findDOMNode(this.props.editor)
+        let parentBoundary = parent.getBoundingClientRect()
+
+        const toolbarHeight = el.offsetHeight;
+
+        let left = selectionBoundary.left + selectionBoundary.width / 2 - padd
+        
+        let diff = window.pageYOffset + parent.getBoundingClientRect().top
+      
+        let top = selectionBoundary.top - parentBoundary.top + toolbarHeight //+ diff
+
+        return this.setPosition({ top: top, left: left })
+
       }
     } else {
       return this.hide()
@@ -184,9 +186,10 @@ class DanteImagePopoverItem extends React.Component {
     return <li
       className={`dante-menu-button align-${ this.props.item.type }`}
       onMouseDown={this.handleClick}>
-        <span className={`tooltip-icon dante-icon-image-${ this.props.item.type }`} />
+        <span className={`tooltip-icon dante-icon dante-icon-image-${ this.props.item.type }`} />
     </li>
   }
 }
 
 export default DanteImagePopover
+
