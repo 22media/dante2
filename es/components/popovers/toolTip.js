@@ -278,8 +278,8 @@ var DanteTooltip = function (_React$Component) {
       {
         id: 'dante-menu',
         ref: 'dante_menu',
-        className: 'dante-menu ' + this.displayActiveMenu() + ' ' + this.displayLinkMode()
-        // style: this.getPosition()
+        className: 'dante-menu ' + this.displayActiveMenu() + ' ' + this.displayLinkMode(),
+        style: this.getPosition()
       },
       React.createElement(
         'div',
