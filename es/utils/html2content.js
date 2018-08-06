@@ -96,7 +96,7 @@ var customHTML2Content = function customHTML2Content(HTML, blockRn) {
   var contentBlocks = convertFromHTML(tempDoc.body.innerHTML, getSafeBodyFromHTML, blockRn);
 
   // now replace <blockquote /> ContentBlocks with 'atomic' ones
-  contentBlocks = contentBlocks.map(function (block) {
+  contentBlocks = contentBlocks.contentBlocks.map(function (block) {
     var newBlock = void 0;
     console.log("CHECK BLOCK", block.getType());
     if (block.getType() !== 'blockquote') {
