@@ -17,7 +17,7 @@ import {
 } from 'draft-js'
 
 import {
-  convertToHTML,
+  convertToHTML, convertFromHTML
 } from 'draft-convert'
 
 import {
@@ -444,13 +444,16 @@ export default class DanteEditor extends React.Component {
 
     let { editorState } = this.state
 
-    // TODO: make this configurable
-    switch (currentBlock.getType()) {
-      case "image":case "video":case "placeholder":
-        return this.handleTXTPaste(text, html)
-    }
+    // // TODO: make this configurable
+    // switch (currentBlock.getType()) {
+    //   case "image":case "video":case "placeholder":
+    //     return this.handleTXTPaste(text, html)
+    // }
 
-    const newContentState = customHTML2Content(html, this.extendedBlockRenderMap)
+    // const newContentState = customHTML2Content(html, this.extendedBlockRenderMap)
+    
+    // use draft-convert's convert to html instead
+    let newContentState = convertFromHTML(html);
     
     const pastedBlocks = newContentState.getBlockMap()
 
