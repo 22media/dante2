@@ -383,8 +383,10 @@ function (_React$Component) {
       // }
       // const newContentState = customHTML2Content(html, this.extendedBlockRenderMap)
       // use draft-convert's convert to html instead
+      // fix google doc extra line breaks
 
-      var newContentState = convertFromHTML(html);
+      var fixedHtml = html.replace(/[<][/][p][>][<][b][r].*?[>]/g, "</p>");
+      var newContentState = convertFromHTML(fixedHtml, true);
       var pastedBlocks = newContentState.getBlockMap();
       var newState = Modifier.replaceWithFragment(editorState.getCurrentContent(), editorState.getSelection(), pastedBlocks);
       var pushedContentState = EditorState.push(editorState, newState, 'insert-fragment');
