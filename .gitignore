@@ -8,7 +8,7 @@
 .docz
 # production
 /build
-/package
+
 /docs
 .idea
 
