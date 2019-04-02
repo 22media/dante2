@@ -453,8 +453,10 @@ export default class DanteEditor extends React.Component {
     // const newContentState = customHTML2Content(html, this.extendedBlockRenderMap)
     
     // use draft-convert's convert to html instead
-    let newContentState = convertFromHTML(html);
-    
+    // fix google doc extra line breaks
+    let fixedHtml = html.replace(/[<][/][p][>][<][b][r].*?[>]/g,"</p>");
+    let newContentState = convertFromHTML(fixedHtml, true);
+
     const pastedBlocks = newContentState.getBlockMap()
 
     const newState = Modifier.replaceWithFragment(
